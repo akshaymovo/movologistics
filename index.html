@@ -1785,7 +1785,87 @@
     top: 10px;
     font-size: 24px;
     cursor: pointer;
+}/* Modal ka Background (Dark Overlay) */
+.modal {
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.6);
 }
+
+/* Modal ka Main Box */
+.modal-content {
+    background-color: #ffffff;
+    margin: 8% auto;
+    padding: 25px;
+    width: 90%;
+    max-width: 420px;
+    border-radius: 12px;
+    box-shadow: 0px 5px 20px rgba(0,0,0,0.3);
+    position: relative;
+    font-family: inherit;
+}
+
+/* Modal ki Heading */
+.modal-content h3 {
+    margin-top: 0;
+    color: #0b2545;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Input Box ki Styling */
+.modal-content input, .modal-content textarea {
+    width: 100%;
+    padding: 12px;
+    margin: 10px 0;
+    border: 1px solid #d0d7de;
+    border-radius: 6px;
+    font-size: 14px;
+    box-sizing: border-box;
+}
+
+/* Submit Button ki Styling (Aapke website ke button jaisa Pill-Shape) */
+.custom-submit-btn {
+    width: 100%;
+    padding: 12px;
+    background-color: #1d63ed;
+    color: white;
+    border: 2px solid #1d63ed;
+    border-radius: 30px; /* Pill shape ke liye */
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    margin-top: 10px;
+    transition: background 0.3s ease;
+}
+
+/* Submit Button Hover Effect */
+.custom-submit-btn:hover {
+    background-color: #124abf;
+}
+
+/* Close (X) Button ki Styling */
+.close-rider, .close-client {
+    position: absolute;
+    right: 20px;
+    top: 15px;
+    font-size: 26px;
+    color: #555;
+    cursor: pointer;
+}
+
+/* Close (X) Button Hover Effect */
+.close-rider:hover, .close-client:hover {
+    color: #000;
+}
+
+
+
+Only CSS delete krke ye daal dijiye
 </style>
 
 
