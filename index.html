@@ -1711,5 +1711,152 @@
             });
         })();
     </script>
-</body>
+        <!-- 1. HTML: Buttons aur Modal Forms -->
+<!-- (Apne existing buttons mein ye IDs 'deliveryBtn' aur 'partnerBtn' zaroor check kar lein) -->
+<button id="deliveryBtn">JOIN AS A DELIVERY PARTNER</button>
+<button id="partnerBtn">PARTNER WITH MOVO LOGISTICS</button>
+
+<!-- Rider Form Modal -->
+<div id="riderModal" class="modal" style="display:none;">
+  <div class="modal-content">
+    <span class="close-rider">&times;</span>
+    <h3>Delivery Partner Registration</h3>
+    <form id="riderForm">
+      <input type="text" id="r_name" placeholder="Name" required>
+      <input type="tel" id="r_mobile" placeholder="Mobile No." required>
+      <input type="text" id="r_city" placeholder="City" required>
+      <input type="text" id="r_zone" placeholder="Working Zone" required>
+      <input type="text" id="r_vehicle" placeholder="Vehicle Type" required>
+      <textarea id="r_msg" placeholder="Message (Optional)"></textarea>
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+</div>
+
+<!-- Client Form Modal -->
+<div id="clientModal" class="modal" style="display:none;">
+  <div class="modal-content">
+    <span class="close-client">&times;</span>
+    <h3>Business Partner Registration</h3>
+    <form id="clientForm">
+      <input type="text" id="c_name" placeholder="Your Name" required>
+      <input type="text" id="c_company" placeholder="Company Name" required>
+      <input type="tel" id="c_mobile" placeholder="Mobile No." required>
+      <input type="email" id="c_email" placeholder="Your Email" required>
+      <textarea id="c_msg" placeholder="Message (Optional)"></textarea>
+      <button type="submit">Submit</button>
+    </form>
+  </div>
+</div>
+
+
+<!-- 2. CSS: Styling ke liye -->
+<style>
+.modal {
+    position: fixed;
+    z-index: 9999;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.5);
+}
+.modal-content {
+    background-color: #fff;
+    margin: 10% auto;
+    padding: 20px;
+    width: 90%;
+    max-width: 400px;
+    border-radius: 8px;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.3);
+    position: relative;
+}
+.modal-content input, .modal-content textarea {
+    width: 100%;
+    padding: 10px;
+    margin: 8px 0;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+.modal-content button[type="submit"] {
+    width: 100%;
+    padding: 10px;
+    background-color: #0056b3;
+    color: white;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+}
+.close-rider, .close-client {
+    position: absolute;
+    right: 15px;
+    top: 10px;
+    font-size: 24px;
+    cursor: pointer;
+}
+</style>
+
+
+<!-- 3. JavaScript: Click aur Google Sheet data transfer ke liye -->
+<script>
+const scriptURL = 'https://script.google.com/macros/s/AKfycbxeSt5yA3PHoSoNrrmK-9ej8ZkQ9CrG9QHPWDR2sFUPqAhGQONl1IEhFYvS7g2xhjc6dg/exec';
+
+const deliveryBtn = document.getElementById('deliveryBtn');
+const partnerBtn = document.getElementById('partnerBtn');
+const riderModal = document.getElementById('riderModal');
+const clientModal = document.getElementById('clientModal');
+
+if(deliveryBtn) {
+    deliveryBtn.addEventListener('click', () => riderModal.style.display = 'block');
+}
+if(partnerBtn) {
+    partnerBtn.addEventListener('click', () => clientModal.style.display = 'block');
+}
+
+document.querySelector('.close-rider').addEventListener('click', () => riderModal.style.display = 'none');
+document.querySelector('.close-client').addEventListener('click', () => clientModal.style.display = 'none');
+
+document.getElementById('riderForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const formData = {
+        formType: 'rider',
+        name: document.getElementById('r_name').value,
+        mobile: document.getElementById('r_mobile').value,
+        city: document.getElementById('r_city').value,
+        workingZone: document.getElementById('r_zone').value,
+        vehicleType: document.getElementById('r_vehicle').value,
+        message: document.getElementById('r_msg').value
+    };
+    sendDataToSheet(formData, riderModal);
+});
+
+document.getElementById('clientForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    const formData = {
+        formType: 'client',
+        name: document.getElementById('c_name').value,
+        companyName: document.getElementById('c_company').value,
+        mobile: document.getElementById('c_mobile').value,
+        email: document.getElementById('c_email').value,
+        message: document.getElementById('c_msg').value
+    };
+    sendDataToSheet(formData, clientModal);
+});
+
+function sendDataToSheet(data, modalToClose) {
+    fetch(scriptURL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+    })
+    .then(() => {
+        alert('Form Submitted Successfully!');
+        modalToClose.style.display = 'none';
+        location.reload();
+    })
+    .catch(error => console.error('Error!', error.message));
+}
+</script>
+ </body>
 </html>
