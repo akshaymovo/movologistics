@@ -1501,6 +1501,9 @@
                 </div>
             </div>
 
+            <div class="firebase-reviews-title">Latest Rider Reviews</div>
+            <div id="firebaseReviews" class="firebase-review-grid" aria-live="polite"></div>
+
             <div class="testi-bottom-btns">
                 <button class="btn-add-review"><i class="fa-regular fa-square-plus"></i> Add Review</button>
                 <button class="btn-more-review" onclick="toggleAllReviews()">More Review</button>
@@ -1992,5 +1995,462 @@ function sendData(formData, modalToClose) {
     .catch(error => console.error('Error!', error));
 }
 </script>
+
+<!-- ================= FIREBASE RIDER REVIEW STYLES ================= -->
+<style>
+.firebase-reviews-title {
+    margin: 25px 0 15px;
+    font-size: 14px;
+    font-weight: 700;
+    color: #0f172a;
+}
+
+.firebase-review-grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 20px;
+    margin-top: 20px;
+    text-align: left;
+}
+
+.firebase-review-card {
+    background: #162238;
+    color: #fff;
+    border-radius: 20px;
+    padding: 25px;
+    border-left: 4px solid #38bdf8;
+    box-shadow: 0 8px 25px rgba(15, 23, 42, 0.08);
+}
+
+.firebase-review-card .review-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    margin-bottom: 15px;
+}
+
+.firebase-review-card .review-avatar {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+    background: #38bdf8;
+    color: #162238;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 800;
+    font-size: 14px;
+    flex-shrink: 0;
+}
+
+.firebase-review-card .review-name {
+    font-size: 14px;
+    font-weight: 700;
+}
+
+.firebase-review-card .review-city {
+    color: #94a3b8;
+    font-size: 11px;
+    margin-top: 2px;
+}
+
+.firebase-review-card .review-stars {
+    margin-left: auto;
+    color: #38bdf8;
+    font-size: 11px;
+    white-space: nowrap;
+}
+
+.firebase-review-card .review-text {
+    color: #cbd5e1;
+    font-size: 13px;
+    line-height: 1.6;
+    font-style: italic;
+}
+
+.firebase-review-empty {
+    color: #475569;
+    font-size: 13px;
+    padding: 15px;
+}
+
+/* Rider Review Modal */
+#riderReviewModal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    z-index: 10001;
+    background: rgba(15, 23, 42, 0.72);
+    padding: 20px;
+    overflow-y: auto;
+}
+
+#riderReviewModal .review-modal-box {
+    width: 100%;
+    max-width: 470px;
+    margin: 5vh auto;
+    background: #fff;
+    border-radius: 18px;
+    padding: 28px;
+    position: relative;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.25);
+}
+
+#riderReviewModal h3 {
+    color: #0f172a;
+    text-align: center;
+    margin: 0 0 6px;
+    font-size: 22px;
+}
+
+#riderReviewModal .review-subtitle {
+    text-align: center;
+    color: #64748b;
+    font-size: 12px;
+    margin-bottom: 20px;
+}
+
+#riderReviewModal input,
+#riderReviewModal textarea {
+    width: 100%;
+    padding: 12px 14px;
+    margin-bottom: 12px;
+    border: 1px solid #dbe3ec;
+    border-radius: 9px;
+    font-size: 14px;
+    outline: none;
+    background: #f8fafc;
+}
+
+#riderReviewModal input:focus,
+#riderReviewModal textarea:focus {
+    border-color: #0284c7;
+    background: #fff;
+}
+
+#riderReviewModal textarea {
+    min-height: 110px;
+    resize: vertical;
+}
+
+.review-rating-label {
+    display: block;
+    font-size: 13px;
+    font-weight: 700;
+    color: #334155;
+    margin: 2px 0 8px;
+}
+
+.review-rating {
+    display: flex;
+    gap: 7px;
+    margin-bottom: 14px;
+}
+
+.review-rating button {
+    border: none;
+    background: transparent;
+    color: #cbd5e1;
+    font-size: 25px;
+    cursor: pointer;
+    padding: 0;
+}
+
+.review-rating button.selected,
+.review-rating button:hover {
+    color: #f59e0b;
+}
+
+.review-submit-btn {
+    width: 100%;
+    padding: 13px;
+    border: none;
+    border-radius: 30px;
+    background: #0284c7;
+    color: #fff;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: .2s ease;
+}
+
+.review-submit-btn:hover {
+    background: #0369a1;
+}
+
+.review-submit-btn:disabled {
+    opacity: .6;
+    cursor: not-allowed;
+}
+
+.review-modal-close {
+    position: absolute;
+    right: 18px;
+    top: 13px;
+    border: none;
+    background: transparent;
+    color: #64748b;
+    font-size: 27px;
+    cursor: pointer;
+}
+
+.review-form-message {
+    text-align: center;
+    font-size: 12px;
+    margin-top: 10px;
+    min-height: 18px;
+}
+
+@media (max-width: 900px) {
+    .firebase-review-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+}
+
+@media (max-width: 600px) {
+    .firebase-review-grid {
+        grid-template-columns: 1fr;
+    }
+
+    #riderReviewModal .review-modal-box {
+        padding: 22px;
+        margin: 2vh auto;
+    }
+}
+</style>
+
+<!-- ================= FIREBASE RIDER REVIEW MODAL ================= -->
+<div id="riderReviewModal" aria-hidden="true">
+    <div class="review-modal-box">
+        <button type="button" class="review-modal-close" id="closeRiderReview" aria-label="Close">&times;</button>
+        <h3>Share Your Rider Experience</h3>
+        <p class="review-subtitle">Tell us about your experience with MOVO Logistics.</p>
+
+        <form id="riderReviewForm">
+            <input type="text" id="reviewName" placeholder="Rider Name" maxlength="60" required>
+            <input type="text" id="reviewCity" placeholder="City" maxlength="60" required>
+
+            <span class="review-rating-label">Your Rating</span>
+            <div class="review-rating" id="reviewRating" aria-label="Select rating">
+                <button type="button" data-rating="1" aria-label="1 star">★</button>
+                <button type="button" data-rating="2" aria-label="2 stars">★</button>
+                <button type="button" data-rating="3" aria-label="3 stars">★</button>
+                <button type="button" data-rating="4" aria-label="4 stars">★</button>
+                <button type="button" data-rating="5" aria-label="5 stars">★</button>
+            </div>
+
+            <textarea id="reviewText" placeholder="Write your experience..." maxlength="500" required></textarea>
+            <button type="submit" class="review-submit-btn" id="submitRiderReview">SUBMIT REVIEW</button>
+            <div class="review-form-message" id="reviewFormMessage"></div>
+        </form>
+    </div>
+</div>
+
+<!-- ================= FIREBASE + RIDER REVIEWS ================= -->
+<script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-app.js";
+    import {
+        getFirestore,
+        collection,
+        addDoc,
+        getDocs,
+        query,
+        where,
+        orderBy,
+        serverTimestamp
+    } from "https://www.gstatic.com/firebasejs/12.1.0/firebase-firestore.js";
+
+    const firebaseConfig = {
+        apiKey: "AIzaSyBsr-8mJ4He1u81P9mYbOG89BGMn0BdrNE",
+        authDomain: "movo-rider-s-app.firebaseapp.com",
+        projectId: "movo-rider-s-app",
+        storageBucket: "movo-rider-s-app.firebasestorage.app",
+        messagingSenderId: "995632572606",
+        appId: "1:995632572606:web:6550db4e1a8abbc20b56ef",
+        measurementId: "G-MGWM6ZDWMB"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    const reviewModal = document.getElementById('riderReviewModal');
+    const reviewForm = document.getElementById('riderReviewForm');
+    const reviewList = document.getElementById('firebaseReviews');
+    const message = document.getElementById('reviewFormMessage');
+    const submitBtn = document.getElementById('submitRiderReview');
+    let selectedRating = 0;
+
+    function openReviewModal() {
+        if (!reviewModal) return;
+        reviewModal.style.display = 'block';
+        reviewModal.setAttribute('aria-hidden', 'false');
+        document.body.style.overflow = 'hidden';
+        setTimeout(() => document.getElementById('reviewName')?.focus(), 100);
+    }
+
+    function closeReviewModal() {
+        if (!reviewModal) return;
+        reviewModal.style.display = 'none';
+        reviewModal.setAttribute('aria-hidden', 'true');
+        document.body.style.overflow = '';
+        message.textContent = '';
+    }
+
+    // Existing Add Review button ko Firebase review form se connect karna
+    document.querySelector('.btn-add-review')?.addEventListener('click', openReviewModal);
+    document.getElementById('closeRiderReview')?.addEventListener('click', closeReviewModal);
+
+    reviewModal?.addEventListener('click', (event) => {
+        if (event.target === reviewModal) closeReviewModal();
+    });
+
+    document.addEventListener('keydown', (event) => {
+        if (event.key === 'Escape' && reviewModal?.style.display === 'block') {
+            closeReviewModal();
+        }
+    });
+
+    // Rating buttons
+    document.querySelectorAll('#reviewRating button').forEach(button => {
+        button.addEventListener('click', () => {
+            selectedRating = Number(button.dataset.rating);
+            document.querySelectorAll('#reviewRating button').forEach(btn => {
+                btn.classList.toggle('selected', Number(btn.dataset.rating) <= selectedRating);
+            });
+        });
+    });
+
+    function getInitials(name) {
+        return name.trim().split(/\s+/).slice(0, 2).map(word => word[0]).join('').toUpperCase();
+    }
+
+    function makeStars(rating) {
+        let html = '';
+        for (let i = 1; i <= 5; i++) {
+            html += `<i class="fa-solid fa-star" style="opacity:${i <= rating ? '1' : '.25'}"></i>`;
+        }
+        return html;
+    }
+
+    function escapeHtml(value) {
+        return String(value ?? '')
+            .replaceAll('&', '&amp;')
+            .replaceAll('<', '&lt;')
+            .replaceAll('>', '&gt;')
+            .replaceAll('"', '&quot;')
+            .replaceAll("'", '&#039;');
+    }
+
+    function renderReview(review) {
+        const card = document.createElement('div');
+        card.className = 'firebase-review-card';
+        const name = escapeHtml(review.name);
+        const city = escapeHtml(review.city);
+        const text = escapeHtml(review.review);
+        const rating = Math.min(5, Math.max(1, Number(review.rating) || 5));
+        card.innerHTML = `
+            <div class="review-head">
+                <div class="review-avatar">${escapeHtml(getInitials(review.name || 'Rider'))}</div>
+                <div>
+                    <div class="review-name">${name}</div>
+                    <div class="review-city"><i class="fa-solid fa-location-dot"></i> ${city}</div>
+                </div>
+                <div class="review-stars">${makeStars(rating)}</div>
+            </div>
+            <div class="review-text">"${text}"</div>
+        `;
+        return card;
+    }
+
+    async function loadRiderReviews() {
+        if (!reviewList) return;
+        reviewList.innerHTML = '<div class="firebase-review-empty">Loading rider experiences...</div>';
+
+        try {
+            const snapshot = await getDocs(collection(db, 'rider_reviews'));
+            const reviews = [];
+
+            snapshot.forEach(doc => {
+                const data = doc.data();
+                if (data.status === 'approved') reviews.push(data);
+            });
+
+            reviews.sort((a, b) => {
+                const aTime = a.createdAt?.seconds || 0;
+                const bTime = b.createdAt?.seconds || 0;
+                return bTime - aTime;
+            });
+
+            reviewList.innerHTML = '';
+
+            if (!reviews.length) {
+                reviewList.innerHTML = '<div class="firebase-review-empty">No new rider reviews yet.</div>';
+                return;
+            }
+
+            reviews.forEach(review => reviewList.appendChild(renderReview(review)));
+        } catch (error) {
+            console.error('Unable to load rider reviews:', error);
+            reviewList.innerHTML = '<div class="firebase-review-empty">Reviews are temporarily unavailable.</div>';
+        }
+    }
+
+    reviewForm?.addEventListener('submit', async (event) => {
+        event.preventDefault();
+
+        const name = document.getElementById('reviewName').value.trim();
+        const city = document.getElementById('reviewCity').value.trim();
+        const review = document.getElementById('reviewText').value.trim();
+
+        if (!selectedRating) {
+            message.textContent = 'Please select a rating.';
+            message.style.color = '#dc2626';
+            return;
+        }
+
+        if (!name || !city || !review) {
+            message.textContent = 'Please fill all required fields.';
+            message.style.color = '#dc2626';
+            return;
+        }
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'SUBMITTING...';
+        message.textContent = 'Saving your review...';
+        message.style.color = '#475569';
+
+        try {
+            await addDoc(collection(db, 'rider_reviews'), {
+                name,
+                city,
+                rating: selectedRating,
+                review,
+                status: 'approved',
+                createdAt: serverTimestamp()
+            });
+
+            message.textContent = 'Review submitted successfully!';
+            message.style.color = '#16a34a';
+            reviewForm.reset();
+            selectedRating = 0;
+            document.querySelectorAll('#reviewRating button').forEach(btn => btn.classList.remove('selected'));
+
+            await loadRiderReviews();
+
+            setTimeout(closeReviewModal, 900);
+        } catch (error) {
+            console.error('Error saving review:', error);
+            message.textContent = 'Review save nahi hua. Firebase Rules check karni hongi.';
+            message.style.color = '#dc2626';
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'SUBMIT REVIEW';
+        }
+    });
+
+    console.log('MOVO Firebase Connected Successfully!');
+    loadRiderReviews();
+</script>
+
 </body>
 </html>
