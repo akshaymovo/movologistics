@@ -1744,6 +1744,66 @@
 
 <!-- 2. CSS Styling -->
 <style>
+    .hero-buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 18px;
+    margin-top: 30px;
+    flex-wrap: wrap;
+}
+
+.hero-buttons button {
+    min-width: 240px;
+    padding: 15px 28px;
+    border: none;
+    border-radius: 8px;
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+/* Orange button */
+#deliveryBtn {
+    background: #ff7a00;
+    color: white;
+    box-shadow: 0 6px 18px rgba(255, 122, 0, 0.25);
+}
+
+/* White button */
+#partnerBtn {
+    background: white;
+    color: #ff7a00;
+    border: 2px solid #ff7a00;
+    box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
+}
+
+/* Hover */
+#deliveryBtn:hover {
+    background: #e96800;
+    transform: translateY(-3px);
+}
+
+#partnerBtn:hover {
+    background: #ff7a00;
+    color: white;
+    transform: translateY(-3px);
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+    .hero-buttons {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .hero-buttons button {
+        width: 90%;
+        min-width: unset;
+    }
+}
 .modal {
     position: fixed;
     z-index: 9999;
