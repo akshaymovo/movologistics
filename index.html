@@ -844,6 +844,15 @@
             text-decoration: none;
             font-size: 12px;
             font-weight: 700;
+            border: none;
+            cursor: pointer;
+            font-family: inherit;
+            line-height: normal;
+        }
+
+        .btn-join:hover {
+            background-color: #0284c7;
+            color: #fff;
         }
 
         /* 8. Leadership Team Section */
@@ -1121,7 +1130,7 @@
             <p>MOVO LOGISTICS specializes in fast, scalable, and reliable last-mile delivery operations for modern logistics platforms.</p>
             <!-- Aapke purane buttons jo code mein pehle se hain, unhe aisa kar dein: --> </div>
               <div class="hero-buttons">
-<button id="deliveryBtn">JOIN AS A DELIVERY PARTNER</button>
+<button type="button" id="deliveryBtn" class="open-rider-form">DELIVER WITH MOVO LOGISTICS</button>
 <button id="partnerBtn">PARTNER WITH MOVO LOGISTICS</button>
         </div>
     </section>
@@ -1530,13 +1539,8 @@
                             <h3>Riders</h3>
                             <p>Be part of Movo Logistics and grow with a fast-moving delivery network.</p>
                         </div>
-                        <div class="hero-buttons">
-<button id="deliveryBtn">JOIN AS</button>
-
-        </div>
-                
-          
-            </div>
+                    </div>
+                    <button type="button" class="btn-join open-rider-form">Apply Now</button>
                 </div>
                 <div class="career-row">
                     <div class="career-left">
@@ -1777,7 +1781,8 @@
 }
 
 /* Orange button */
-#deliveryBtn {
+#deliveryBtn,
+.open-rider-form {
     background: #ff7a00;
     color: white;
     box-shadow: 0 6px 18px rgba(255, 122, 0, 0.25);
@@ -1792,7 +1797,8 @@
 }
 
 /* Hover */
-#deliveryBtn:hover {
+#deliveryBtn:hover,
+.open-rider-form:hover {
     background: #e96800;
     transform: translateY(-3px);
 }
@@ -1944,20 +1950,55 @@ Only CSS delete krke ye daal dijiye
 <script>
 const scriptURL = 'https://script.google.com/macros/s/AKfycbxeSt5yA3PHoSoNrrmK-9ej8ZkQ9CrG9QHPWDR2sFUPqAhGQONl1IEhFYvS7g2xhjc6dg/exec';
 
-const deliveryBtn = document.getElementById('deliveryBtn');
+const riderButtons = document.querySelectorAll('.open-rider-form');
 const partnerBtn = document.getElementById('partnerBtn');
 const riderModal = document.getElementById('riderModal');
 const clientModal = document.getElementById('clientModal');
 
-if(deliveryBtn) {
-    deliveryBtn.addEventListener('click', () => riderModal.style.display = 'block');
-}
-if(partnerBtn) {
-    partnerBtn.addEventListener('click', () => clientModal.style.display = 'block');
+function openRiderForm() {
+    if (riderModal) {
+        riderModal.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+    }
 }
 
-document.querySelector('.close-rider').addEventListener('click', () => riderModal.style.display = 'none');
-document.querySelector('.close-client').addEventListener('click', () => clientModal.style.display = 'none');
+function closeRiderForm() {
+    if (riderModal) {
+        riderModal.style.display = 'none';
+        document.body.style.overflow = '';
+    }
+}
+
+/* Hero + Careers Rider button dono SAME rider form kholenge */
+riderButtons.forEach(button => {
+    button.addEventListener('click', openRiderForm);
+});
+
+if (partnerBtn && clientModal) {
+    partnerBtn.addEventListener('click', () => {
+        clientModal.style.display = 'block';
+        document.body.style.overflow = 'hidden';
+    });
+}
+
+document.querySelector('.close-rider')?.addEventListener('click', closeRiderForm);
+document.querySelector('.close-client')?.addEventListener('click', () => {
+    if (clientModal) {
+        clientModal.style.display = 'none';
+        document.body.style.overflow = '';
+    }
+});
+
+riderModal?.addEventListener('click', (event) => {
+    if (event.target === riderModal) closeRiderForm();
+});
+
+clientModal?.addEventListener('click', (event) => {
+    if (event.target === clientModal) {
+        clientModal.style.display = 'none';
+        document.body.style.overflow = '';
+    }
+});
 
 // Rider Form Submit
 document.getElementById('riderForm').addEventListener('submit', function(e) {
