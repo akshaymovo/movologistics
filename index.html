@@ -2265,6 +2265,123 @@ function sendData(formData, modalToClose) {
         margin: 2vh auto;
     }
 }
+    /* ================================
+   RIDER REGISTRATION MODAL FIX
+================================ */
+
+/* Modal background */
+.modal {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.65);
+}
+
+/* Modal box */
+.modal-content {
+    width: 100%;
+    max-width: 610px;
+    max-height: 90vh;
+    overflow-y: auto;
+    background: #ffffff;
+    border-radius: 18px;
+    padding: 30px;
+    position: relative;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.25);
+}
+
+/* Modal heading */
+.modal-content h2 {
+    text-align: center;
+    margin-bottom: 20px;
+    color: #0f172a;
+}
+
+/* Close button */
+.modal-content .close,
+.modal-content .modal-close {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    font-size: 28px;
+    cursor: pointer;
+    color: #475569;
+}
+
+/* Form fields */
+.modal-content input,
+.modal-content textarea,
+.modal-content select {
+    width: 100%;
+    padding: 12px 15px;
+    margin-bottom: 12px;
+    border: 1px solid #cbd5e1;
+    border-radius: 9px;
+    font-size: 14px;
+    outline: none;
+    background: #fff;
+}
+
+.modal-content input:focus,
+.modal-content textarea:focus,
+.modal-content select:focus {
+    border-color: #0284c7;
+    box-shadow: 0 0 0 2px rgba(2,132,199,0.12);
+}
+
+/* Message box */
+.modal-content textarea {
+    min-height: 80px;
+    resize: vertical;
+}
+
+/* SUBMIT BUTTON - BLUE */
+.modal-content button[type="submit"],
+.modal-content .submit-btn,
+.modal-content .review-submit-btn {
+    width: 100%;
+    background: #0284c7 !important;
+    color: #ffffff !important;
+    border: none;
+    padding: 12px 20px;
+    border-radius: 10px;
+    font-size: 14px;
+    font-weight: 700;
+    cursor: pointer;
+    margin-top: 5px;
+    display: block;
+}
+
+.modal-content button[type="submit"]:hover,
+.modal-content .submit-btn:hover,
+.modal-content .review-submit-btn:hover {
+    background: #0369a1 !important;
+}
+
+/* Mobile */
+@media (max-width: 600px) {
+    .modal {
+        padding: 10px;
+        align-items: center;
+    }
+
+    .modal-content {
+        max-height: 94vh;
+        padding: 22px 18px;
+        border-radius: 15px;
+    }
+
+    .modal-content input,
+    .modal-content textarea,
+    .modal-content select {
+        padding: 11px 13px;
+        margin-bottom: 10px;
+    }
+}
 </style>
 
 <!-- ================= FIREBASE RIDER REVIEW MODAL ================= -->
