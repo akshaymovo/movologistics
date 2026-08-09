@@ -1724,42 +1724,113 @@
             });
         })();
     </script>
-    <!-- 1. Modal Popup Forms (Ye background mein rahenge, click par khulenge) -->
+    <!-- 1. Hero / Career Modal Forms -->
 <div id="riderModal" class="modal" style="display:none;">
-  <div class="modal-content">
-    <span class="close-rider">&times;</span>
-    <h3>Delivery Partner Registration</h3>
-    <form id="riderForm">
-      <input type="text" id="r_name" placeholder="Name" required>
-      <input type="tel" id="r_mobile" placeholder="Mobile No." required>
-      <input type="text" id="r_city" placeholder="City" required>
-      <input type="text" id="r_zone" placeholder="Working Zone" required>
-      <input type="text" id="r_vehicle" placeholder="Vehicle Type" required>
-      <textarea id="r_msg" placeholder="Message (Optional)"></textarea>
-      <button type="submit">Submit</button>
-    </form>
-  </div>
+    <div class="modal-content form-modal">
+        <button type="button" class="modal-close close-rider" aria-label="Close">&times;</button>
+
+        <div class="form-header">
+            <div class="form-icon"><i class="fa-solid fa-motorcycle"></i></div>
+            <div>
+                <h3>Delivery With MOVO LOGISTICS</h3>
+                <p>Join our delivery network and start working in your preferred area.</p>
+            </div>
+        </div>
+
+        <form id="riderForm" class="popup-form">
+            <div class="form-field">
+                <label for="r_name">Full Name <span>*</span></label>
+                <input type="text" id="r_name" placeholder="Enter your full name" required>
+            </div>
+
+            <div class="form-field">
+                <label for="r_mobile">Mobile Number <span>*</span></label>
+                <input type="tel" id="r_mobile" placeholder="Enter mobile number" required>
+            </div>
+
+            <div class="form-field">
+                <label for="r_city">City <span>*</span></label>
+                <input type="text" id="r_city" placeholder="Enter your city" required>
+            </div>
+
+            <div class="form-field">
+                <label for="r_zone">Working Zone <span>*</span></label>
+                <input type="text" id="r_zone" placeholder="Preferred working area" required>
+            </div>
+
+            <div class="form-field">
+                <label for="r_vehicle">Vehicle Type <span>*</span></label>
+                <select id="r_vehicle" required>
+                    <option value="" disabled selected>Select vehicle type</option>
+                    <option value="Bike">Bike</option>
+                    <option value="Scooter">Scooter</option>
+                    <option value="Electric Bike">Electric Bike</option>
+                    <option value="Other">Other</option>
+                </select>
+            </div>
+
+            <div class="form-field full-width">
+                <label for="r_msg">Message <small>(Optional)</small></label>
+                <textarea id="r_msg" placeholder="Write your message"></textarea>
+            </div>
+
+            <button type="submit" class="custom-submit-btn">
+                <i class="fa-solid fa-paper-plane"></i> Submit Application
+            </button>
+        </form>
+    </div>
 </div>
 
 <div id="clientModal" class="modal" style="display:none;">
-  <div class="modal-content">
-    <span class="close-client">&times;</span>
-    <h3>Business Partner Registration</h3>
-    <form id="clientForm">
-      <input type="text" id="c_name" placeholder="Your Name" required>
-      <input type="text" id="c_company" placeholder="Company Name" required>
-      <input type="tel" id="c_mobile" placeholder="Mobile No." required>
-      <input type="email" id="c_email" placeholder="Your Email" required>
-      <textarea id="c_msg" placeholder="Message (Optional)"></textarea>
-      <button type="submit">Submit</button>
-    </form>
-  </div>
+    <div class="modal-content form-modal">
+        <button type="button" class="modal-close close-client" aria-label="Close">&times;</button>
+
+        <div class="form-header">
+            <div class="form-icon partner-icon"><i class="fa-solid fa-handshake"></i></div>
+            <div>
+                <h3>Partner With MOVO LOGISTICS</h3>
+                <p>Tell us about your business and our team will contact you.</p>
+            </div>
+        </div>
+
+        <form id="clientForm" class="popup-form">
+            <div class="form-field">
+                <label for="c_name">Your Name <span>*</span></label>
+                <input type="text" id="c_name" placeholder="Enter your name" required>
+            </div>
+
+            <div class="form-field">
+                <label for="c_company">Company Name <span>*</span></label>
+                <input type="text" id="c_company" placeholder="Enter company name" required>
+            </div>
+
+            <div class="form-field">
+                <label for="c_mobile">Mobile Number <span>*</span></label>
+                <input type="tel" id="c_mobile" placeholder="Enter mobile number" required>
+            </div>
+
+            <div class="form-field">
+                <label for="c_email">Email Address <span>*</span></label>
+                <input type="email" id="c_email" placeholder="Enter email address" required>
+            </div>
+
+            <div class="form-field full-width">
+                <label for="c_msg">Message <small>(Optional)</small></label>
+                <textarea id="c_msg" placeholder="Tell us about your partnership requirement"></textarea>
+            </div>
+
+            <button type="submit" class="custom-submit-btn">
+                <i class="fa-solid fa-paper-plane"></i> Submit Partnership Request
+            </button>
+        </form>
+    </div>
 </div>
 
 
 <!-- 2. CSS Styling -->
 <style>
-    .hero-buttons {
+/* Hero buttons */
+.hero-buttons {
     display: flex;
     justify-content: center;
     align-items: center;
@@ -1778,25 +1849,23 @@
     letter-spacing: 0.5px;
     cursor: pointer;
     transition: all 0.3s ease;
+    font-family: inherit;
 }
 
-/* Orange button */
 #deliveryBtn,
 .open-rider-form {
     background: #ff7a00;
-    color: white;
+    color: #fff;
     box-shadow: 0 6px 18px rgba(255, 122, 0, 0.25);
 }
 
-/* White button */
 #partnerBtn {
-    background: white;
+    background: #fff;
     color: #ff7a00;
     border: 2px solid #ff7a00;
     box-shadow: 0 6px 18px rgba(0, 0, 0, 0.08);
 }
 
-/* Hover */
 #deliveryBtn:hover,
 .open-rider-form:hover {
     background: #e96800;
@@ -1805,8 +1874,205 @@
 
 #partnerBtn:hover {
     background: #ff7a00;
-    color: white;
+    color: #fff;
     transform: translateY(-3px);
+}
+
+/* Full-screen modal */
+.modal {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    width: 100%;
+    height: 100dvh;
+    padding: 15px;
+    background: rgba(15, 23, 42, 0.68);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow-y: auto;
+    backdrop-filter: blur(3px);
+}
+
+/* Main form box - complete form stays inside the screen */
+.form-modal {
+    width: min(94vw, 680px);
+    max-width: 680px;
+    max-height: calc(100dvh - 30px);
+    margin: 0;
+    padding: 28px;
+    background: #fff;
+    border-radius: 20px;
+    position: relative;
+    overflow-y: auto;
+    box-shadow: 0 25px 70px rgba(0, 0, 0, 0.28);
+    border: 1px solid #e2e8f0;
+}
+
+/* Header */
+.form-header {
+    display: flex;
+    align-items: center;
+    gap: 14px;
+    padding-right: 35px;
+    margin-bottom: 22px;
+}
+
+.form-icon {
+    width: 48px;
+    height: 48px;
+    min-width: 48px;
+    border-radius: 14px;
+    background: #fff1e6;
+    color: #ff7a00;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 21px;
+}
+
+.partner-icon {
+    background: #e0f2fe;
+    color: #0284c7;
+}
+
+.form-header h3 {
+    margin: 0 0 4px;
+    color: #0f172a;
+    font-size: 20px;
+    font-weight: 800;
+    line-height: 1.25;
+}
+
+.form-header p {
+    margin: 0;
+    color: #64748b;
+    font-size: 12px;
+    line-height: 1.5;
+}
+
+/* Close button */
+.modal-close {
+    position: absolute;
+    top: 14px;
+    right: 16px;
+    width: 34px;
+    height: 34px;
+    border: none;
+    border-radius: 50%;
+    background: #f1f5f9;
+    color: #475569;
+    font-size: 24px;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: 0.2s ease;
+    z-index: 2;
+}
+
+.modal-close:hover {
+    background: #e2e8f0;
+    color: #0f172a;
+    transform: rotate(90deg);
+}
+
+/* Form layout */
+.popup-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px 16px;
+}
+
+.form-field {
+    min-width: 0;
+}
+
+.form-field.full-width {
+    grid-column: 1 / -1;
+}
+
+.form-field label {
+    display: block;
+    margin-bottom: 6px;
+    color: #334155;
+    font-size: 12px;
+    font-weight: 700;
+}
+
+.form-field label span {
+    color: #ef4444;
+}
+
+.form-field label small {
+    color: #94a3b8;
+    font-weight: 500;
+}
+
+.form-field input,
+.form-field select,
+.form-field textarea {
+    width: 100%;
+    padding: 12px 14px;
+    border: 1px solid #cbd5e1;
+    border-radius: 10px;
+    background: #fff;
+    color: #0f172a;
+    outline: none;
+    font-family: inherit;
+    font-size: 13px;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+}
+
+.form-field input,
+.form-field select {
+    height: 45px;
+}
+
+.form-field textarea {
+    min-height: 78px;
+    max-height: 120px;
+    resize: vertical;
+}
+
+.form-field input::placeholder,
+.form-field textarea::placeholder {
+    color: #94a3b8;
+}
+
+.form-field input:focus,
+.form-field select:focus,
+.form-field textarea:focus {
+    border-color: #38bdf8;
+    box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.13);
+}
+
+.custom-submit-btn {
+    grid-column: 1 / -1;
+    width: 100%;
+    min-height: 46px;
+    padding: 12px 18px;
+    margin-top: 2px;
+    border: none;
+    border-radius: 12px;
+    background: linear-gradient(90deg, #ff7a00, #ff9d3d);
+    color: #fff;
+    font-family: inherit;
+    font-size: 14px;
+    font-weight: 800;
+    cursor: pointer;
+    box-shadow: 0 7px 18px rgba(255, 122, 0, 0.25);
+    transition: all 0.25s ease;
+}
+
+.custom-submit-btn:hover {
+    background: linear-gradient(90deg, #e96800, #ff8c1a);
+    transform: translateY(-2px);
+}
+
+.custom-submit-btn:active {
+    transform: translateY(0);
 }
 
 /* Mobile */
@@ -1820,131 +2086,49 @@
         width: 90%;
         min-width: unset;
     }
-}
-.modal {
-    position: fixed;
-    z-index: 9999;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.5);
-}
-.modal-content {
-    background-color: #fff;
-    margin: 10% auto;
-    padding: 20px;
-    width: 90%;
-    max-width: 400px;
-    border-radius: 8px;
-    box-shadow: 0px 0px 10px rgba(0,0,0,0.3);
-    position: relative;
-}
-.modal-content input, .modal-content textarea {
-    width: 100%;
-    padding: 10px;
-    margin: 8px 0;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-.modal-content button[type="submit"] {
-    width: 100%;
-    padding: 10px;
-    background-color: #0056b3;
-    color: white;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-}
-.close-rider, .close-client {
-    position: absolute;
-    right: 15px;
-    top: 10px;
-    font-size: 24px;
-    cursor: pointer;
-}/* Modal ka Background (Dark Overlay) */
-.modal {
-    position: fixed;
-    z-index: 9999;
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    background-color: rgba(0,0,0,0.6);
-}
 
-/* Modal ka Main Box */
-.modal-content {
-    background-color: #ffffff;
-    margin: 8% auto;
-    padding: 25px;
-    width: 90%;
-    max-width: 420px;
-    border-radius: 12px;
-    box-shadow: 0px 5px 20px rgba(0,0,0,0.3);
-    position: relative;
-    font-family: inherit;
+    .modal {
+        padding: 10px;
+        align-items: center;
+    }
+
+    .form-modal {
+        width: 100%;
+        max-height: calc(100dvh - 20px);
+        padding: 22px 18px;
+        border-radius: 16px;
+    }
+
+    .form-header {
+        margin-bottom: 17px;
+    }
+
+    .form-icon {
+        width: 42px;
+        height: 42px;
+        min-width: 42px;
+        font-size: 18px;
+    }
+
+    .form-header h3 {
+        font-size: 17px;
+    }
+
+    .form-header p {
+        font-size: 11px;
+    }
+
+    .popup-form {
+        grid-template-columns: 1fr;
+        gap: 12px;
+    }
+
+    .form-field.full-width,
+    .custom-submit-btn {
+        grid-column: auto;
+    }
 }
-
-/* Modal ki Heading */
-.modal-content h3 {
-    margin-top: 0;
-    color: #0b2545;
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-/* Input Box ki Styling */
-.modal-content input, .modal-content textarea {
-    width: 100%;
-    padding: 12px;
-    margin: 10px 0;
-    border: 1px solid #d0d7de;
-    border-radius: 6px;
-    font-size: 14px;
-    box-sizing: border-box;
-}
-
-/* Submit Button ki Styling (Aapke website ke button jaisa Pill-Shape) */
-.custom-submit-btn {
-    width: 100%;
-    padding: 12px;
-    background-color: #1d63ed;
-    color: white;
-    border: 2px solid #1d63ed;
-    border-radius: 30px; /* Pill shape ke liye */
-    font-size: 16px;
-    font-weight: 600;
-    cursor: pointer;
-    margin-top: 10px;
-    transition: background 0.3s ease;
-}
-
-/* Submit Button Hover Effect */
-.custom-submit-btn:hover {
-    background-color: #124abf;
-}
-
-/* Close (X) Button ki Styling */
-.close-rider, .close-client {
-    position: absolute;
-    right: 20px;
-    top: 15px;
-    font-size: 26px;
-    color: #555;
-    cursor: pointer;
-}
-
-/* Close (X) Button Hover Effect */
-.close-rider:hover, .close-client:hover {
-    color: #000;
-}
-
-
-
-Only CSS delete krke ye daal dijiye
 </style>
-
 
 <!-- 3. JavaScript -->
 <script>
